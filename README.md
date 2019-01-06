@@ -4,12 +4,12 @@
 
 ## Prérequis
 
-Si ce n'est pas fait, installer nodeJS
-Avoir un serveur mysql
+* Si ce n'est pas fait, installer nodeJS
+* Avoir un serveur mysql
 
 ## Librairies
 
-Express
-body-parser
-ejs
-sqlite3
+* Express
+* body-parser
+* ejs
+* sqlite3
