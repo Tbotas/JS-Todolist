@@ -41,6 +41,6 @@ db.run(`CREATE TABLE IF NOT EXISTS users (user_id INTEGER PRIMARY KEY,
     password TEXT,
     email TEXT,
     updatedAt TEXT,
-    createdAt TEXT,)`)
+    createdAt TEXT)`)
 
 module.exports = db
