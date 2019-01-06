@@ -1,0 +1,10 @@
+{
+    "name": "projet-js",
+    "version": "0.1.0",
+    "main": "index.js",
+    "dependencies": {
+        "express": "latest",
+        "body-parser": "latest",
+        "ejs": "latest"
+    }
+}
