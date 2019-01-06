@@ -8,8 +8,9 @@ node .
 
 ## Prérequis
 
-* Si ce n'est pas fait, installer nodeJS
-* Avoir un serveur mysql
+* Si ce n'est pas fait, installer NodeJS version 10.0.0+
+* Faire la commande:
+	`npm install`
 
 ## Routes
 
@@ -29,3 +30,4 @@ node .
 * body-parser
 * ejs
 * sqlite3
+* bcryptjs

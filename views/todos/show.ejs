@@ -23,6 +23,34 @@
       </ul>
     </div>
   </nav>
+
+  <div class="container">
+    <% if(todo){ %>
+        <table>
+            <tr>
+                <th>Message</th>
+                <th>Completion</th>
+                <th>CreatedAt</th>
+                <th>UpdatedAt</th>
+                <th>UserId</th>
+                <th></th>
+                <th></th>
+            </tr>
+                <tr>
+                    <td><%= todo.message %></td>
+                    <td><%= todo.completion %></td>
+                    <td><%= todo.createdAt %></td>
+                    <td><%= todo.updatedAt %></td>
+                    <td><%= todo.userId %></td>
+                    <td><a href="/todos/<%= todos.todoId %>" class="btn btn-secondary"></td>
+                    <td><a href="/todos/<%= todos.todoId %>/edit" class="btn btn-secondary"></td>
+                </tr>
+        </table>
+    <% } else { %>
+        <h2>Aucun todo</h2>
+    <% } %>
+</div>
+
   <button type="button" class="btn btn-primary" onclick="window.location.href='/todos/add'"> Ajouter Todo </button>
   <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
     crossorigin="anonymous"></script>
