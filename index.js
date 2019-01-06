@@ -3,6 +3,7 @@
 const express = require('express')
 const bodyParser = require('body-parser')
 const databaseModel = require('./sqldb/databaseModel.js')
+const bcrypt = require('bcryptjs')
 
 let app = express()
 const PORT = 8080
@@ -29,14 +30,20 @@ requestError = (route, res, err, redirect = false) => {
     })
 }
 
-// All the routes
+// todos routes
+
+app.get('/todos/add', (req, res) => {
+    res.render('todos/form.ejs')
+})
 
 app.get('/todos', (req, res) => {
     databaseModel.getAllFromRessource('todo')
         .then((rows) => {
             res.format({
                 html: () => {
-                    res.render('todos/index.ejs')
+                    res.render('todos/index.ejs', {
+                        todos: rows
+                    })
                 },
                 json: () => {
                     res.status(200)
@@ -85,6 +92,10 @@ app.post('/todos', (req, res) => {
         })
 })
 
+app.get('/todos/:id/edit', (req, res) => {
+    res.render('todos/form.ejs')
+})
+
 app.delete('/todos/:id', (req, res) => {
     databaseModel.deleteRessource('todo', req.params.id)
         .then(() => {
@@ -103,13 +114,118 @@ app.delete('/todos/:id', (req, res) => {
         })
 })
 
-app.get('/todos/add', (req, res) => {
-    res.render('todos/form.ejs')
+
+
+
+
+// users routes
+
+app.get('/users/add', (req, res) => {
+    console.log("oui");
+    res.render('users/form.ejs')
 })
 
-app.get('/todos/:id/edit', (req, res) => {
-    res.render('todos/form.ejs')
+app.get('/users', (req, res) => {
+    databaseModel.getAllFromRessource('user')
+        .then((rows) => {
+            res.format({
+                html: () => {
+                    res.render('users/index.ejs')
+                },
+                json: () => {
+                    res.status(200)
+                    res.json(rows)
+                }
+            })
+        })
+        .catch((err) => {
+            requestError('users/index.ejs', res, err)
+        })
 })
+
+app.get('/users/:id/edit', (req, res) => {
+    res.render('users/form.ejs')
+})
+
+app.get('/users/:id/todos', (req, res) => {
+    databaseModel.getAllTodoFromUser(req.params.id)
+    .then(() => {
+        res.format({
+            html: () => {
+                res.render('todos/index.ejs')
+            },
+            json: () => {
+                res.status(200)
+                res.json({message: "success"})
+            }
+        })
+    })
+    .catch((err) => {
+        requestError('/users', res, err, true)
+    })
+})
+
+app.get('/users/:id', (req, res) => {
+    databaseModel.getSingleFromRessource('user')
+        .then((rows) => {
+            res.format({
+                html: () => {
+                    res.render('users/show.ejs')
+                },
+                json: () => {
+                    res.status(200)
+                    res.json(rows)
+                }
+            })
+        })
+        .catch((err) => {
+            requestError('users/show.ejs', res, err)
+        })
+})
+
+app.post('/users', (req, res) => {
+    bcrypt.hash(req.params.password, 10, function(err, hash) {
+        databaseModel.postNewTodo(req.params, hash)
+            .then(() => {
+                res.format({
+                    html: () => {
+                        res.redirect(301, '/users')
+                    },
+                    json: () => {
+                        res.status(200)
+                        res.json({message: "success"})
+                    }
+                })
+            })
+            .catch((err) => {
+                requestError('/users', res, err, true)
+            })
+    });
+    
+})
+
+app.delete('/users/:id', (req, res) => {
+    databaseModel.deleteRessource('user', req.params.id)
+        .then(() => {
+            res.format({
+                html: () => {
+                    res.redirect(301, '/users')
+                },
+                json: () => {
+                    res.status(200)
+                    res.json({message: "success"})
+                }
+            })
+        })
+        .catch((err) => {
+            requestError('/users', res, err, true)
+        })
+})
+
+
+
+
+
 
 
 

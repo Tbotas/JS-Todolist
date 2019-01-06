@@ -18,15 +18,15 @@
                 <a class="navbar-brand" href="#">ToDoListAPI</a>
             </div>
             <ul class="nav navbar-nav">
-                <li><a href="../todos/index.ejs">Todos</a></li>
+                <li><a href="../todos">Todos</a></li>
                 <li class="active"><a href="#">Users</a></li>
             </ul>
         </div>
     </nav>
-    <button type="button" class="btn btn-primary" onclick="window.location.href='./index.ejs'"> Show users </button>
+    <button type="button" class="btn btn-primary" onclick="window.location.href='/users'"> Show users </button>
     <div class="row-sm">
         <div class="col">
-            <form method="POST" action="/todos">
+            <form method="POST" action="/users">
 
                 <div class="form-group">
                     <label for="InputFirstname">First Name</label>
